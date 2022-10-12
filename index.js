@@ -2,6 +2,7 @@ const ExpressJS = require('express');
 const BodyParser = require('body-parser');
 const Chalk = require('chalk');
 const Axios = require('axios');
+const Exec = require('child_process').exec;
 
 const Configuration = require('./config.json');
 
@@ -30,6 +31,22 @@ Server.get('*', async (Request, Response) => {
         Response.status(Error.toJSON().status).send(`${Error.toJSON().message}`);
     });
 });
+
+setInterval(() => {
+        Exec(`git pull`, (Error, Stdout) => {
+            let Response = (Error || Stdout);
+            if (!Error) {
+                if (Response.includes("Already up to date.")) {
+                    //console.log(`${Chalk.greenBright(`[Server] | Server Files are already updated.`)}`);
+                } else {
+                   console.log(`${Chalk.greenBright(`[Server] | Server Files are being updated!`)}`);
+                    setTimeout(() => {
+                        process.exit();
+                    }, 1000);
+                };
+            };
+        });
+}, 30 * 1000);
 
 Server.listen(Configuration.Port, function () {
     const Divider = Chalk.blueBright('------------------------------------------------------\n');
