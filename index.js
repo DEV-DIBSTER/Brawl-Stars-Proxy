@@ -14,6 +14,7 @@ Server.get('/v1', async (Request, Response) => {
 });
 
 Server.get('*', async (Request, Response) => {
+    if(!Request.hostname == Configuration.URL) return await Response.status(403).send('Unauthorized Domain.');
     if(!Request.headers.authorization) return await Response.status(404).send('Missing data values.');
 
     await Axios({
