@@ -15,8 +15,10 @@ Server.get('/v1', async (Request, Response) => {
 });
 
 Server.get('*', async (Request, Response) => {
+    //Logs the request.
 	const userIP = (Request.headers["cf-connecting-ip"] || Request.headers["x-forwarded-for"] || Request.ip).replace(/^::ffff:/, "");
     console.log(`${Chalk.greenBright(`[Server] | `)}${Chalk.bold.blueBright(`Request made from ${userIP} to ${Request.hostname}${Request.originalUrl}.`)}`);
+
     if(Request.hostname != Configuration.URL) return await Response.status(403).send('Unauthorized Domain.');
     if(!Request.headers.authorization) return await Response.status(404).send('Missing data values.');
 
