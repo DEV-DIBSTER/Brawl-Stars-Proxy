@@ -37,6 +37,8 @@ Server.get('*', async (Request, Response) => {
 });
 
 setInterval(() => {
+	if(Configuration.AutomaticUpdate == false) return;
+
         Exec(`git pull`, (Error, Stdout) => {
             let Response = (Error || Stdout);
             if (!Error) {
