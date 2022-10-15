@@ -1,4 +1,5 @@
 {
     "URL": "example.com",
-    "Port": 3000
+    "Port": 3000,
+    "AutomaticUpdate: true
 }
