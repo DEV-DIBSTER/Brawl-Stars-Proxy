@@ -23,7 +23,7 @@ const BrawlStarsProxy = HTTPsProxyMiddleware.createProxyMiddleware({
         if(Request.hostname != Configuration.URL) return await Response.status(403).send('Unauthorized Domain.');
         if(!Request.headers.authorization) return await Response.status(404).send('Missing data values.');
 
-        ProxyRequest.setHeader("Authorization", `Bearer ${Request.headers.authorization}`);
+        ProxyRequest.setHeader("Authorization", `${Request.headers.authorization}`);
     },
 });
 
